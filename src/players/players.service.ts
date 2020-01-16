@@ -3,13 +3,12 @@ import { Injectable } from '@nestjs/common';
 import { Player } from './player.interface';
 import { players } from '../../src/data/data.json';
 
-console.log(players);
 @Injectable()
 export class PlayersService {
   private players: Player[] = players;
 
   addPlayer(player: Player) {
-    this.players.push(player);
+    this.players = [...players,player];
     return this.players;
   }
 

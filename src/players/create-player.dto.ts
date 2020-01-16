@@ -5,5 +5,5 @@ export class CreatePlayerDto {
     readonly alias: string;
     readonly position: string;
     readonly bornDate: string;
-    readonly club: string;
+    readonly clubs: string[];
   }

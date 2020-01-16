@@ -4,7 +4,7 @@ export interface Player {
     alias: string;
     position: string;
     bornDate: string;
-    club: string;
+    clubs: string[];
 }
   
   
