@@ -1,0 +1,21 @@
+type Query {
+    getPlayer(id: Int!): Player
+    getPlayers(): Player
+
+  }
+  type Mutation {
+    addPlayer(id: string!;
+    first_name: string!;
+    last_name: string!;
+    alias: string!;
+    position_id: string!;
+    club_id: string!;): Boolean!
+  }
+  type Player {
+    id: string;
+    first_name: string;
+    last_name: string;
+    alias: string;
+    position_id: string;
+    club_id: string;
+  }
