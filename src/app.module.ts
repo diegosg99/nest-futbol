@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 /* import { GraphQLModule } from '@nestjs/graphql';
  */import { PlayersModule } from './players/players.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-/* import { Connection } from 'typeorm';*/
 import { Player } from './entities/player.entity';
 @Module({
   imports: [/* GraphQLModule.forRoot({
@@ -24,5 +23,4 @@ import { Player } from './entities/player.entity';
   providers: [AppService],
 })
 export class AppModule {
-  constructor(/* private readonly connection: Connection */) {}
 }
