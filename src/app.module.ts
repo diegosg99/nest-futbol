@@ -4,12 +4,16 @@ import { AppService } from './app.service';
 /* import { GraphQLModule } from '@nestjs/graphql';
  */import { PlayersModule } from './players/players.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Player } from './entities/player.entity';
+import { Player } from './players/entities/player.entity';
+import { PlayerRepository } from "./players/database/repositories/player.repository"
+/* import { typeDefs } from './typeDefs';
+ */
 @Module({
-  imports: [/* GraphQLModule.forRoot({
-    typePaths: ['./*.gql'],
-    playground: true
-  }), */PlayersModule,
+  imports: [
+    /* GraphQLModule.forRoot({
+      typePaths: ['src/players/database/*.graphql'],
+      installSubscriptionHandlers: true,
+    }), */PlayersModule,
    TypeOrmModule.forRoot(
      {type: "mysql",
    host: "localhost",
@@ -17,7 +21,7 @@ import { Player } from './entities/player.entity';
    username: "root",
    password: "root",
    database: "PCFUTBOL",
-   entities: [Player],
+   entities: [Player, PlayerRepository],
    synchronize: true})],
   controllers: [AppController],
   providers: [AppService],

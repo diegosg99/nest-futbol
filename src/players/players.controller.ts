@@ -2,7 +2,8 @@
 import { Controller, Get,Post,Put,Delete, Param, Body } from '@nestjs/common';
 
 import { PlayersService } from './players.service';
-import { Player } from '../entities/player.entity';
+import { Player } from './entities/player.entity';
+import { PlayerException } from './exceptions/player.exception';
 
 @Controller('players')
 export class PlayersController {
@@ -18,14 +19,13 @@ export class PlayersController {
         return player;
     }
   @Post()
-    addPlayer(@Body() player: Player) : Promise<Player[]> {
+    addPlayer(@Body() player: Player) : Promise<Player | PlayerException> {
       const players = this.playersService.addPlayer(player);
     return players;
   }
   @Put()
-    updatePlayer(@Body() player: Player) : Promise<Player | undefined> {
-      const updatedPlayer = this.playersService.updatePlayer(player);
-    return updatedPlayer;
+    updatePlayer(@Body() player: Player) : Promise<String | PlayerException> {
+    return this.playersService.updatePlayer(player);
   }
   @Delete(':id')
       deletePlayer(@Param() params: any) : Promise<Player[]> {

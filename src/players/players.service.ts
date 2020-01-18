@@ -1,20 +1,22 @@
-
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Player } from '../entities/player.entity';
-
+import { Player } from './entities/player.entity';
+import { PlayerException } from "./exceptions/player.exception";
+import { PlayerRepository } from './database/repositories/player.repository';
 
 @Injectable()
 export class PlayersService {
     constructor(
-        @InjectRepository(Player)
-        private readonly playerRepository: Repository<Player>,
+        @InjectRepository(PlayerRepository)
+        private readonly playerRepository: PlayerRepository,
       ) {}
 
-  addPlayer(player: Player): Promise<Player[]> {
-    this.playerRepository.save(player);
-    return this.playerRepository.find();
+  async addPlayer(player: Player): Promise<Player| PlayerException> {
+    try {
+      return await this.playerRepository.save(player) ? player : new PlayerException;
+    } catch (error) {
+      return error;
+    }
   }
   findAll(): Promise<Player[]> {
     return this.playerRepository.find();
@@ -26,9 +28,9 @@ export class PlayersService {
     const player = this.playerRepository.find({ where: { 'player.name': name } })
     return player;
   }
-  updatePlayer(player:Player): Promise <Player | undefined>{
-    this.playerRepository.update({id:player.id}, player);
-    return this.playerRepository.findOne(player.id);
+  async updatePlayer(player:Player): Promise <String | PlayerException>{
+    const {raw} = await this.playerRepository.update({id:player.id}, player);
+    return raw.affectedRows > 0 ? "Player "+ player.first_name +" updated." : new PlayerException() ;
   }
   deletePlayer(id :any): Promise <Player[]>{
     this.playerRepository.delete({id: id});
